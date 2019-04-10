@@ -11,7 +11,7 @@ class MyWidget(QtWidgets.QWidget):
 
         self.btn_dialog = QtWidgets.QPushButton(u'打开文件')
 
-        self.connect(self.btn_dialog,QtCore.SIGNAL('clicked()'), self,QtCore.SLOT('openFileDialog()'))
+        self.connect(self.btn_dialog,QtCore.SIGNAL('clicked()'), self,QtCore.SLOT('FullScreen()'))
 
         self.layout = QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.btn_dialog)
@@ -25,6 +25,18 @@ class MyWidget(QtWidgets.QWidget):
         if dialog.exec_():
             fileName = dialog.selectedFiles()
             print(fileName)
+    
+    @QtCore.Slot()
+    def FullScreen(self):
+        # self.showFullScreen()
+        widget = QtWidgets.QWidget()
+        label = QtWidgets.QLabel(u'副窗口')
+        la=QtWidgets.QVBoxLayout()
+        la.addWidget(label)
+        widget.setLayout(la)
+        widget.show()
+        sys.exit(widget.exec_())
+        
 
 app = QtWidgets.QApplication()
 widget = MyWidget()
