@@ -28,8 +28,9 @@ class MyWidget(QtWidgets.QWidget):
     
     @QtCore.Slot()
     def FullScreen(self):
-        # self.showFullScreen()
+        self.showFullScreen()
         widget = QtWidgets.QWidget()
+        widget.setFixedSize(300,200)
         label = QtWidgets.QLabel(u'副窗口')
         la=QtWidgets.QVBoxLayout()
         la.addWidget(label)
