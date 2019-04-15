@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>KPL数据录入</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./index.css" />
+	<!-- 引入Vue -->
+	<script src="./lib/js/vue.js"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="./lib/css/element-ui-index.css">
+	<!-- 引入组件库 -->
+	<script src="./lib/js/element-ui-index.js"></script>
+	<!-- Axioss -->
+	<script src="./lib/js/axios.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div class="navigate">
+			<a class="navigate-item" href="/view/index.html">战队设置</a>
+			<a class="navigate-item" href="/view/match.html">赛程设置</a>
+			<a class="navigate-item" href="/view/notice.html">公告及图片设置</a>
+		</div>
+		<div class="navigate-title">赛程设置</div>
+
+    <el-button size="mini" type="primary" @click="MatchVisible = true">添加</el-button>
+    
+		<template>
+			<el-table size="mini" :data="matchList" style="width: 100%">
+				<el-table-column prop="team1Info.name" label="战队1" width="100"></el-table-column>
+				<el-table-column prop="score1" label="战队1分数" width="90"></el-table-column>
+				<el-table-column prop="image" label="战队1海报" width="180">
+					<template slot-scope="scope">
+						<img :src="scope.row.image1" />
+					</template>
+				</el-table-column>
+				<el-table-column prop="weibo1" label="战队1微博"></el-table-column>
+				<el-table-column prop="team2Info.name" label="战队2" width="100">
+				</el-table-column>
+				<el-table-column prop="score2" label="战队2分数" width="90">
+				</el-table-column>
+				<el-table-column prop="image" label="战队2海报" width="180">
+					<template slot-scope="scope">
+						<img :src="scope.row.image2" />
+					</template>
+				</el-table-column>
+				<el-table-column prop="weibo2" label="战队2微博"></el-table-column>
+				<el-table-column prop="formatDate" label="时间"></el-table-column>
+				<el-table-column prop="weibo" label="操作">
+					<template slot-scope="scope" min-width="120">
+						<el-button size="mini" type="primary" @click="editMatch(scope.row)">修改</el-button>
+						<el-button size="mini" type="danger" plain @click="deleteMatch(scope.row)">删除</el-button>
+					</template>
+				</el-table-column>
+      </el-table>
+		</template>
+
+		<el-dialog title="战队" :visible.sync="MatchVisible">
+			<el-form :model="matchFrom">
+				<el-form-item label="战队1" :label-width="formLabelWidth">
+					<el-select v-model="matchFrom.team1" placeholder="请选择">
+						<el-option v-for="item in teamList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="得分1" :label-width="formLabelWidth">
+					<el-input v-model="matchFrom.score1" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="战队1海报" :label-width="formLabelWidth">
+					<el-upload
+						class="upload-demo"
+						ref="upload"
+						action="/api/uploadImg"
+						:show-file-list="false"
+						:on-success="handleImage1Success"
+					>
+						<img v-if="matchFrom.image1" :src="matchFrom.image1" class="avatar">
+						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+					</el-upload>
+				</el-form-item>
+
+				<el-form-item label="战队1微博" :label-width="formLabelWidth">
+					<el-input v-model="matchFrom.weibo1" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="战队2" :label-width="formLabelWidth">
+					<el-select v-model="matchFrom.team2" placeholder="请选择">
+						<el-option v-for="item in teamList" :key="item.id" :label="item.name" :value="item.id"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="得分2" :label-width="formLabelWidth">
+					<el-input v-model="matchFrom.score2" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="战队2海报" :label-width="formLabelWidth">
+					<el-upload
+						class="upload-demo"
+						ref="upload"
+						action="/api/uploadImg"
+						:show-file-list="false"
+						:on-success="handleImage2Success"
+					>
+						<img v-if="matchFrom.image2" :src="matchFrom.image2" class="avatar">
+						<i v-else class="el-icon-plus avatar-uploader-icon"></i>
+					</el-upload>
+				</el-form-item>
+				
+				<el-form-item label="战队2微博" :label-width="formLabelWidth">
+					<el-input v-model="matchFrom.weibo2" autocomplete="off"></el-input>
+				</el-form-item>
+
+				<el-form-item label="选择日期" :label-width="formLabelWidth">
+					<el-date-picker v-model="matchFrom.date" type="datetime" placeholder="选择日期时间"></el-date-picker>
+				</el-form-item>
+
+			</el-form>
+
+			<div slot="footer" class="dialog-footer">
+				<el-button size="mini" @click="initTeamModal">取 消</el-button>
+				<el-button size="mini" type="primary" @click="handleCreateTeam">确 定</el-button>
+			</div>
+		</el-dialog>
+	</div>
+
+
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				formLabelWidth: "100px",
+				radio: "1",
+				teamList:[],
+				matchList: [],
+				MatchVisible: false,
+				matchFrom: {
+          date: Date.now(),
+					team1: '',
+					score1: '',
+					image1: '',
+					weobo1: '',
+					team2: '',
+					score2: '',
+					image2: '',
+					weobo2: '',
+        },
+			},
+			created() {
+				this.initData();
+			},
+			methods: {
+				initData() {
+          axios.get("/api/team")
+						.then(res => {
+							this.teamList = res.data.data;
+						}) 
+					axios.get("/api/match")
+						.then(res => {
+							this.matchList = res.data.data;
+						}) 
+				},
+				handleImage1Success(res) {
+					this.matchFrom.image1 = res.url;
+					console.log('res', res)
+				},
+				handleImage2Success(res) {
+					this.matchFrom.image2 = res.url;
+				},
+				initTeamModal() {
+					this.MatchVisible = false;
+					this.matchFrom = {
+            date: Date.now(),
+            team1: '',
+						score1: '',
+						image1: '',
+            team2: '',
+						score2: '',
+						image2: '',
+          }
+				},
+				handleCreateTeam() {
+          this.matchFrom = {
+            id: this.matchFrom.id,
+            date: new Date(this.matchFrom.date).getTime(),
+            team1: this.matchFrom.team1,
+						score1: this.matchFrom.score1,
+						image1: this.matchFrom.image1,
+						weibo1: this.matchFrom.weibo1,
+            team2: this.matchFrom.team2,
+						score2: this.matchFrom.score2,
+						image2: this.matchFrom.image2,
+						weibo2: this.matchFrom.weibo2,
+          }
+					if (this.matchFrom.id) {
+						axios.put('/api/match', {match: this.matchFrom})
+							.then(res => {
+								this.matchList = res.data.data;
+								this.initTeamModal();
+							})
+					} else {
+						axios.post('/api/match', {match: this.matchFrom})
+							.then(res => {
+								this.matchList = res.data.data;
+								this.initTeamModal();
+							})
+					}
+				},
+				editMatch(match) {
+					this.matchFrom = {
+            ...match
+					}
+					console.log(match);
+					this.MatchVisible = true;
+				},
+				deleteMatch(match) {
+					axios.delete('/api/match', {data: {matchId: match.id}})
+						.then(res => {
+							this.matchList = res.data.data;
+							this.initTeamModal();
+						})
+				}
+			}
+		})    
+	</script>
+</body>
+</html>

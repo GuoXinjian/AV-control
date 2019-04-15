@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>AV_Controe_Demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="./index.css" />
+	<!-- 引入Vue -->
+	<script src="./lib/js/vue.js"></script>
+	<!-- 引入样式 -->
+	<link rel="stylesheet" href="./lib/css/element-ui-index.css">
+	<!-- 引入组件库 -->
+	<script src="./lib/js/element-ui-index.js"></script>
+	<!-- Axioss -->
+	<script src="./lib/js/axios.js"></script>
+</head>
+<body>
+	<div id="app">
+		<el-button type="primary" size="small" @click="handleCreateOrder(1)">开场1</el-button>
+		<el-button type="danger" plain size="small" @click="handleCreateOrder(2)">开场2</el-button>
+	</div>
+
+	<script>		
+		var app = new Vue({
+			el: "#app",
+			data: {
+				radio: "1",
+				orderList: [],
+				orderForm:{
+					id: "",
+					orderInfo:{
+						light: {
+							type: "",
+							space: ""
+						},
+						music: {
+							type: "",
+							space: ""
+						},
+					},
+					remark:"",
+					date: Date.now(),
+				}
+			},
+			created(){
+				this.initData();
+			},
+			methods:{
+				initData(){
+					axios.get("/api/order").then(res => {
+						this.orderList = res.data.data;
+					})
+				},
+				initOrderModel(){
+					this.orderForm = {
+						id: "",
+						orderInfo:{
+							light: {
+								type: "",
+								space: ""
+							},
+							music: {
+								type: "",
+								space: ""
+							}
+						},
+						remark:"",
+						date: Date.now(),
+					}
+				},
+				handleCreateOrder(btnType){
+					var curLightType = btnType == 1 ? 1 : 2;
+					var curMusicType = btnType == 1 ? 0 : 1;
+					var curLightSpace = btnType == 1 ? 0 : 2;
+					var curMusicSpace = btnType == 1 ? 3 : 1;
+					var curRemark = btnType == 1 ? "开场1" : "开场2";
+
+					this.orderForm = {
+						id: this.orderForm.id,
+						orderInfo:{
+							light: {
+								type: curLightType,
+								space: curLightSpace
+							},
+							music: {
+								type: curMusicType,
+								space: curMusicSpace
+							},
+						},
+						remark: curRemark,
+						date: new Date(this.orderForm.date).getTime()
+					}
+
+					if(this.orderForm.id){
+						axios.put("/api/order",{order: this.orderForm}).then(res => {
+							this.orderList = res.data.data;
+							this.initOrderModel();
+						})
+					}else{
+						axios.post("/api/order",{order: this.orderForm}).then(res => {
+							this.orderList = res.data.data;
+							this.initOrderModel();
+						})
+					}
+
+					axios({
+						method: "post",
+						url: "http://192.168.8.31:5000/",
+						params: this.orderForm
+					})
+					
+				},
+				deleteOrder(order){
+					axios.delete("/api/order",{data: {orderId: order.id}}).then(res => {
+						this.orderList = res.data.data;
+						this.initOrderModel();
+					})
+				}
+			}
+		});  
+	</script>
+</body>
+</html>
