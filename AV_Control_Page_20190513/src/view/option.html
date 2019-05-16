@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>AV_Control_Edit_Page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="./lib/js/vue.js"></script>
+	<script src="./lib/js/axios.js"></script>
+	<script src="./lib/js/element-ui-index.js"></script>
+	<script src="./lib/js/jquery-3.1.1.js"></script>
+	<script src="./lib/js/jquery-migrate-1.2.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="./lib/css/element-ui-index.css">
+	<link rel="stylesheet" type="text/css" href="./css/timeline.css" />
+	<link rel="stylesheet" type="text/css" href="./css/optionIndex.css" />
+</head>
+<body>
+	<div id="app" style="height: 100%">
+		<el-container style="height: 100%; border: 1px solid #eee">
+			<el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+				<div style="display:flex;flex-direction: column">
+					<div class="titleDiv">
+						<p class="subtitle">命令</p>
+						<el-button 
+							id="add" 
+							type="primary" 
+							class="defaultBtn" 
+							@click="addGroupOrderButtonClick"
+						>添加<i class="el-icon-circle-plus el-icon--right"></i></el-button>
+					</div>
+					<el-menu :unique-opened="true">
+						<template v-for="(orderMenuItem,index) in orderList">
+							<el-submenu :index=index+'order'>
+								<div slot="title" @click="handleGroupOrderClick(orderMenuItem)">
+									<i class="el-icon-setting"></i>
+									{{orderMenuItem.name}}
+								</div>
+								<template v-for="(subOrders,subIndex) in orderMenuItem.subOrders">
+									<el-menu-item @click="handleOrder(orderMenuItem, subOrders)" :index=subIndex+''>{{subOrders.name}}</el-menu-item>
+								</template>
+							</el-submenu>
+						</template>
+						<div class="titleDiv">
+							<p class="subtitle">操作</p>
+						</div>
+						<template v-for="(menuItem,index) in menuAction">
+							<el-submenu :index=index+''>
+								<template slot="title"><i class="el-icon-setting"></i>{{menuItem.name}}</template>
+								<template v-for="(subMenuItem,subIndex) in menuItem.list">
+									<el-menu-item @click="handleMenuSelected(menuItem, subMenuItem)" :index=subIndex+''>{{subMenuItem.name}}</el-menu-item>
+								</template>
+							</el-submenu>
+						</template>
+					</el-menu>
+				</div>
+			</el-aside>
+			
+			<el-container>
+				<el-header style="text-align: right; font-size: 12px">
+					<el-breadcrumb separator-class="el-icon-arrow-right">
+						<el-breadcrumb-item>当前操作项</el-breadcrumb-item>
+						<template v-for="(item, index) in breadcrumbs">
+							<el-breadcrumb-item :key=index+''>{{item}}</el-breadcrumb-item>
+						</template>
+					</el-breadcrumb>
+					<el-button 
+						v-if="type==1 || type==2 || type==3"
+						class="sendBtn" 
+						type="primary"
+						icon="el-icon-edit"
+						@click="addButtonClick()"
+						>添加</el-button>
+					<el-button 
+						v-if="type==1 || type==2"
+						class="sendBtn" 
+						type="danger"
+						icon="el-icon-delete"
+						@click="deleteButtonClick"
+						>删除</el-button>
+					<el-input style="margin-left: 3rem" id="ipInput" class="serverIpInput" placeholder="IP:端口号，例：192.1.0.1:3000" prefix-icon="el-icon-edit-outline" v-model="serverIP"></el-input>
+					<el-button 
+						v-if="type == 2"
+						class="sendBtn" 
+						type="success"
+						@click="handlePublishOrder"
+						>发送<i class="el-icon-upload el-icon--right"></i></el-button>
+				</el-header>
+				
+				<el-main>
+					<div class="detailDiv">
+						<el-input v-if="type != 3" placeholder="请输入指令名称" prefix-icon="el-icon-edit-outline" v-model="name" @blur="inputBlur"></el-input>
+						<el-input v-if="type != 3"  type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入指令描述" v-model="description" @blur="inputBlur"></el-input>
+						<el-input id="shortkeyInput" maxlength="1" v-if="type == 2" placeholder="设置快捷键，键盘0~1/A~Z" prefix-icon="el-icon-edit-outline" @blur="inputBlur" v-model="curKey" @keydown.native="keyboardChange($event)"></el-input>
+						
+						<div v-if="type==2">
+							<div class="step-container" style="margin-left:1%;margin-top:100px;">
+								<div class="step-line"></div>
+								<template v-for="(item, index) in selectScreens">
+									<div class="step-item">
+										<div class="point"></div>
+										<div class="step-date">{{item.date}}</div>
+										<el-tag
+											v-for="(option, index2) in item.detail"
+											closable
+											:disable-transitions="false"
+											@close="handleDeleteOrderOption(item, option)">
+											{{option.name}}  {{option.type==2 && '| ' + option.data.velocity || ""}}
+										</el-tag>
+									</div>
+								</template>
+							</div>
+	
+							<div class="step-container" style="margin-left:1%;">
+								<div class="step-line"></div>
+								<template v-for="(item, index) in selectLamps">
+									<div class="step-item">
+										<div class="point"></div>
+										<div class="step-date">{{item.date}}</div>
+										<el-tag
+											v-for="(option, index2) in item.detail"
+											closable
+											:disable-transitions="false"
+											@close="handleDeleteOrderOption(item, option)">
+											{{option.name}} {{option.type==4 && '| ' + option.data.velocity || ""}}
+										</el-tag>
+									</div>
+								</template>
+							</div>
+							<div class="step-container" style="margin-left:1%;">
+								<div class="step-line"></div>
+								<template v-for="(item, index) in selectSounds">
+									<div class="step-item">
+										<div class="point"></div>
+										<div class="step-date">{{item.date}}</div>
+										<el-tag
+											v-for="(option, index2) in item.detail"
+											closable
+											:disable-transitions="false"
+											@close="handleDeleteOrderOption(item, option)">
+											{{option.name}} {{option.type==6 && '| ' + option.data.velocity || ""}}
+										</el-tag>
+									</div>
+								</template>
+							</div>
+						</div>
+						
+						<el-table
+							v-if="type==3"
+							:data="selectActions"
+							style="width: 100%">
+							<el-table-column
+								prop="data.pitch"
+								label="按键号码"
+								width="180">
+							</el-table-column>
+							<el-table-column
+								prop="name"
+								label="按键姓名"
+								width="180">
+							</el-table-column>
+							<el-table-column
+								prop="description"
+								label="按键描述">
+							</el-table-column>
+							<el-table-column
+								fixed="right"
+								label="按键操作"
+								width="140">
+								<template slot-scope="scope">
+									<div style="width:100%;height:100;display:flex">
+										<el-button type="primary" size="small" @click="addButtonClick(scope.row)">编辑</el-button>
+										<el-button type="success" size="small" @click="sendSingleOptionOrder(scope.row)">发送</el-button>
+								</div>
+								</template>
+							</el-table-column>
+						</el-table>
+
+						<el-dialog
+							:title="createModal.title"
+							:visible.sync="createModal.visible"
+							width="30%"
+						>
+							<div class="create-modal">
+								<el-input placeholder="请输入指令名称" prefix-icon="el-icon-edit-outline" v-model="createModal.name"></el-input>
+								<el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入指令描述" v-model="createModal.description"></el-input>
+							</div>
+							<span slot="footer" class="dialog-footer">
+								<el-button @click="createModal.visible = false">取 消</el-button>
+								<el-button type="primary" @click="modalAddButtonClick">确 定</el-button>
+							</span>
+						</el-dialog>
+
+						<el-dialog
+							title="添加按键"
+							:visible.sync="createActionModal.visible"
+							width="30%"
+						>
+							<el-input-number placeholder="请输入按键号码" v-model="createActionModal.pitch"></el-input-number>
+							<el-input placeholder="请输入按键名称" v-model="createActionModal.name"></el-input>
+							<el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入按键描述" v-model="createActionModal.description"></el-input>
+							<span slot="footer" class="dialog-footer">
+								<el-button @click="createActionModal.visible = false">取 消</el-button>
+								<el-button type="primary" @click="modalAddButtonClick">确 定</el-button>
+							</span>
+						</el-dialog>
+
+						<el-dialog
+							title="添加操作项"
+							:visible.sync="addModal.visible"
+							width="30%"
+						>
+							<div class="create-modal">
+								<el-time-picker
+									v-model="addModal.date"
+									value-format="HH:mm:ss"
+									placeholder="请选择时间点">
+								</el-time-picker>
+								<el-select v-model="addModal.menuActionIndex" @change="addActionGroupChange"  placeholder="请选择">
+									<el-option
+										v-for="(item, index) in menuAction"
+										:key="index" :label="item.name" :value="index">
+									</el-option>
+								</el-select>
+								<el-select v-model="addModal.type" @change="addActionTypeChange" placeholder="请选择">
+									<el-option
+										v-for="(item, index) in addModal.types"
+										:key="item.type" :label="item.name" :value="item.type">
+									</el-option>
+								</el-select>
+								<el-select v-model="addModal.id" placeholder="请选择">
+									<el-option
+										v-for="(item, index) in addModal.actions"
+										:key="item.id" :label="item.name" :value="item.id">
+									</el-option>
+								</el-select>
+								<el-input v-if="addModal.type==2 || addModal.type==4 || addModal.type==6" 
+									v-model="addModal.velocity" placeholder="请输入数值（0~100）"></el-input>
+							</div>
+							<span slot="footer" class="dialog-footer">
+								<el-button @click="addModal.visible = false">取 消</el-button>
+								<el-button type="primary" @click="orderAddAction">确 定</el-button>
+							</span>
+						</el-dialog>
+					</div>					
+				</el-main>
+			</el-container>
+		</el-container>
+		
+	</div>
+  <script src="./js/tool.js"></script>
+	<script src="js/optionIint.js"></script>
+	<script src="js/shortkeyFunc.js"></script>
+</body>
+</html>

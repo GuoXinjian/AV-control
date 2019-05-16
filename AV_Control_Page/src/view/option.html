@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AV_Controe</title>
+	<title>AV_Control_Edit_Page</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<script src="./lib/js/vue.js"></script>
 	<script src="./lib/js/axios.js"></script>
@@ -76,9 +76,9 @@
 						icon="el-icon-delete"
 						@click="deleteButtonClick"
 						>删除</el-button>
-					<el-input class="serverIpInput" placeholder="IP:端口号，例：192.1.0.1:3000" prefix-icon="el-icon-edit-outline" v-model="serverIP"></el-input>
+					<el-input id="ipInput" class="serverIpInput" placeholder="IP:端口号，例：192.1.0.1:3000" prefix-icon="el-icon-edit-outline" v-model="serverIP"></el-input>
 					<el-button 
-						v-if="type !== 0"
+						v-if="type == 2 || type == 3"
 						class="sendBtn" 
 						type="primary"
 						@click="handlePublishOrder"
@@ -89,6 +89,7 @@
 					<div class="detailDiv">
 						<el-input placeholder="请输入指令名称" prefix-icon="el-icon-edit-outline" v-model="name" @blur="inputBlur"></el-input>
 						<el-input type="textarea" :autosize="{ minRows: 4, maxRows: 6}" placeholder="请输入指令描述" v-model="description" @blur="inputBlur"></el-input>
+						<el-input id="shortkeyInput" maxlength="1" v-if="type == 2" placeholder="设置快捷键，键盘0~1/A~Z" prefix-icon="el-icon-edit-outline" @blur="inputBlur" v-model="curKey" @keydown.native="keyboardChange($event)"></el-input>
 						
 						<div v-if="type==2">
 							<div class="step-container" style="margin-left:1%;margin-top:100px;">
@@ -195,6 +196,7 @@
 		
 	</div>
   <script src="./js/tool.js"></script>
-  <script src="js/optionIint.js"></script>
+	<script src="js/optionIint.js"></script>
+	<script src="js/shortkeyFunc.js"></script>
 </body>
 </html>

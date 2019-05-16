@@ -36,55 +36,6 @@
           "detail": [
             {
               "id": 1,
-              "name": "灯光1",
-              "type": 2,
-              "description": "",
-              "data": {
-                "time": 0,
-                "velocity": 200,
-                "pitch": 1
-              }
-            },
-            {
-              "id": 4,
-              "name": "屏幕4",
-              "type": 1,
-              "description": "",
-              "data": {
-                "time": 0,
-                "velocity": 200,
-                "pitch": 4
-              }
-            },
-            {
-              "id": 1,
-              "name": "音响1",
-              "type": 3,
-              "description": "",
-              "data": {
-                "time": 0,
-                "velocity": 200,
-                "pitch": 1
-              }
-            },
-            {
-              "id": 4,
-              "name": "灯光4",
-              "type": 2,
-              "description": "",
-              "data": {
-                "time": 0,
-                "velocity": 200,
-                "pitch": 4
-              }
-            }
-          ]
-        },
-        {
-          "date": "00:00:01",
-          "detail": [
-            {
-              "id": 1,
               "name": "屏幕1",
               "type": 1,
               "description": "",
@@ -97,27 +48,38 @@
           ]
         },
         {
-          "date": "00:00:02",
+          "date": "00:00:01",
           "detail": [
             {
-              "id": 1,
-              "name": "灯光1",
+              "id": 2,
+              "name": "灯光2",
               "type": 2,
               "description": "",
               "data": {
                 "time": 0,
                 "velocity": 200,
-                "pitch": 1
+                "pitch": 2
               }
+            }
+          ]
+        },
+        {
+          "date": "00:00:02",
+          "detail": [
+            {
+              "type": 3,
+              "id": 3
             }
           ]
         }
       ],
-      "description": "开场1的第一条指令"
+      "description": "开场1的第一条指令",
+      "shortcutkeycode": 65,
+      "shortcutkey": "A"
     },
     {
       "name": "指令2",
-      "description": "",
+      "description": "开场1的第2条指令",
       "id": "order_1557046451747",
       "date": 1557046451747,
       "orderInfo": [
@@ -159,11 +121,13 @@
             }
           ]
         }
-      ]
+      ],
+      "shortcutkey": "B",
+      "shortcutkeycode": 66
     },
     {
-      "name": "ending1",
-      "description": "",
+      "name": "Ending1",
+      "description": "第一个Ending",
       "id": "order_1557064208839",
       "date": 1557064208839,
       "orderInfo": [
@@ -195,7 +159,7 @@
           ]
         },
         {
-          "date": "00:00:02",
+          "date": "00:00:01",
           "detail": [
             {
               "id": 1,
@@ -209,17 +173,22 @@
               }
             }
           ]
-        },
-        {
-          "date": "00:00:05",
-          "detail": [
-            {
-              "type": 1,
-              "id": 1
-            }
-          ]
         }
-      ]
+      ],
+      "shortcutkey": "C",
+      "shortcutkeycode": 67
+    },
+    {
+      "remark": "开场1",
+      "orderInfo": [],
+      "id": "order_1557211132372",
+      "date": 1557211132372
+    },
+    {
+      "remark": "开场1",
+      "orderInfo": [],
+      "id": "order_1557211189364",
+      "date": 1557211189364
     }
   ],
   "lamps": [

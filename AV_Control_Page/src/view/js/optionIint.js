@@ -10,6 +10,7 @@ var app = new Vue({
     serverIP:"",
     name:"",
     description:"",
+    curKey:"",
     selectOrder:{},
     selectGroupOrder: {},
     selectAction: {},
@@ -74,6 +75,7 @@ var app = new Vue({
       this.name = item.name;
       this.selectOrder = item;
       this.selectGroupOrder = group;
+      this.curKey = item.shortcutkey;
       this.formateSelectOrder(this.selectOrder.orderInfo);
     },
     handleMenuSelected(group, item) {
@@ -145,7 +147,6 @@ var app = new Vue({
           this.$message.error(error.message)
         })
       } else if (this.type == Type.action) {
-        
         this.selectAction.name = this.name;
         this.selectAction.description = this.description;
         axios.put('/api/order/action', {action: this.selectAction}).then(res => {
@@ -161,6 +162,65 @@ var app = new Vue({
         }).catch(error => {
           this.$message.error(error.message)
         })
+      }
+    },
+    keyboardChange(ev){
+      var keyName = ev.key;
+      var keyNo = ev.keyCode;
+      if(this.curKey != keyName){
+        this.$nextTick(() => {
+          if(keyNo <= 90 && keyNo >= 48){
+            this.curKey = keyName;
+            if(this.type == Type.subOrder){
+              var repeatNum = 0;
+              for(var i = 0; i < this.orderList.length; i++){
+                for(var j = 0; j < this.orderList[i]['subOrders'].length; j++){
+                  if(keyNo == this.orderList[i]['subOrders'][j]['shortcutkeycode'] && this.selectOrder.id != this.orderList[i]['subOrders'][j]['id']){
+                    repeatNum ++;
+                  }
+                }
+              }
+              // 如果没有重复的
+              if(repeatNum == 0){
+                this.selectOrder.shortcutkey = keyName;
+                this.selectOrder.shortcutkeycode = keyNo;
+                this.$message.success('快捷键设置成功')
+                axios.put('/api/order', {order: this.selectOrder}).then(res => {
+                  const {code, data, message} = res.data;
+                  if (code == 0) {
+                    this.orders = data.orders;
+                  } else {
+                    this.$message({
+                      message: message,
+                      type: 'error'
+                    });
+                  }
+                })
+              }else{
+                this.curKey = "";
+                this.$message({message: "快捷键已存在，请重新设置",type: 'error'});
+              }
+            }
+          }else{ // 按键不是0~9或A~Z，就置空
+            this.curKey = "";
+            this.$message.error('按键无效，请将输入法调为英文，然后点击0~9或A~Z（不分大小写）重新设置');
+            this.selectOrder.shortcutkey = "";
+            this.selectOrder.shortcutkeycode = "";
+            axios.put('/api/order', {order: this.selectOrder}).then(res => {
+              const {code, data, message} = res.data;
+              if (code == 0) {
+                this.orders = data.orders;
+              } else {
+                this.$message({
+                  message: message,
+                  type: 'error'
+                });
+              }
+            })
+          }
+        });
+      }else{
+        this.curKey = keyName;
       }
     },
     addAction() {
@@ -202,14 +262,12 @@ var app = new Vue({
       })
     },
     handleDeleteOrderOption(timeDate, item) {
-      
       this.selectOrder.orderInfo = this.selectOrder.orderInfo.map((time) => {
         if(timeDate.date == time.date) {
           time.detail = time.detail.filter(action => !(action.id == item.id && item.type == action.type));
         }
         return time;
       }).filter(item => !!item.detail.length)
-      console.log(this.selectOrder.orderInfo)
       axios.put('/api/order', {
         order: this.selectOrder
       }).then(res => {

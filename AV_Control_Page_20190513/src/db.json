@@ -1,0 +1,586 @@
+{
+  "orders": [
+    {
+      "name": "开场",
+      "description": "",
+      "id": "group_order_1555923278798",
+      "date": 1555923278798,
+      "subOrders": [
+        {
+          "name": "指令1",
+          "description": "",
+          "id": "order_1557726764197",
+          "date": 1557726764197,
+          "orderInfo": [
+            {
+              "date": "00:00:00",
+              "detail": [
+                {
+                  "name": "屏幕按钮16",
+                  "description": "",
+                  "type": "1",
+                  "id": "action_1557651376567",
+                  "date": 1557726802825,
+                  "data": {
+                    "time": 0,
+                    "pitch": 16,
+                    "velocity": 200
+                  }
+                },
+                {
+                  "name": "音响按钮1",
+                  "description": "音响按钮",
+                  "type": "5",
+                  "id": "action_1557654902287",
+                  "date": 1557654902287,
+                  "data": {
+                    "time": 0,
+                    "velocity": 200,
+                    "pitch": 1
+                  }
+                }
+              ]
+            },
+            {
+              "date": "00:00:02",
+              "detail": [
+                {
+                  "name": "屏幕按钮26",
+                  "description": "",
+                  "type": "1",
+                  "id": "action_1557651397153",
+                  "date": 1557726817949,
+                  "data": {
+                    "time": 0,
+                    "velocity": 200,
+                    "pitch": 26
+                  }
+                },
+                {
+                  "name": "暂停",
+                  "description": "",
+                  "type": "5",
+                  "id": "action_1557893450180",
+                  "date": 1557893450180,
+                  "data": {
+                    "time": 0,
+                    "velocity": 200,
+                    "pitch": 0
+                  }
+                }
+              ]
+            },
+            {
+              "date": "00:00:04",
+              "detail": [
+                {
+                  "name": "屏幕按钮27",
+                  "description": "",
+                  "type": "1",
+                  "id": "action_1557651429081",
+                  "date": 1557726823550,
+                  "data": {
+                    "time": 0,
+                    "velocity": 200,
+                    "pitch": 27
+                  }
+                }
+              ]
+            },
+            {
+              "date": "00:00:08",
+              "detail": [
+                {
+                  "name": "屏幕推杆1",
+                  "description": "",
+                  "type": "2",
+                  "id": "action_1557654361178",
+                  "date": 1557654361178,
+                  "data": {
+                    "time": 0,
+                    "pitch": 1,
+                    "velocity": 10
+                  }
+                }
+              ]
+            }
+          ],
+          "shortcutkey": "G",
+          "shortcutkeycode": 71
+        },
+        {
+          "id": "order_1557910804106"
+        }
+      ]
+    },
+    {
+      "name": "ending",
+      "description": "1",
+      "id": "group_order_1557647942871",
+      "date": 1557647942871,
+      "subOrders": []
+    },
+    {
+      "name": "12312",
+      "description": "",
+      "id": "group_order_1557910777290",
+      "date": 1557910777290,
+      "subOrders": []
+    },
+    {
+      "name": "123123",
+      "description": "",
+      "id": "group_order_1557910790722",
+      "date": 1557910790722,
+      "subOrders": []
+    }
+  ],
+  "subOrders": [
+    {
+      "name": "指令1",
+      "description": "",
+      "id": "order_1557726764197",
+      "date": 1557726764197,
+      "orderInfo": [
+        {
+          "date": "00:00:00",
+          "detail": [
+            {
+              "name": "屏幕按钮16",
+              "description": "",
+              "type": "1",
+              "id": "action_1557651376567",
+              "date": 1557726802825,
+              "data": {
+                "time": 0,
+                "pitch": 16,
+                "velocity": 200
+              }
+            },
+            {
+              "name": "音响按钮1",
+              "description": "音响按钮",
+              "type": "5",
+              "id": "action_1557654902287",
+              "date": 1557654902287,
+              "data": {
+                "time": 0,
+                "velocity": 200,
+                "pitch": 1
+              }
+            }
+          ]
+        },
+        {
+          "date": "00:00:02",
+          "detail": [
+            {
+              "name": "屏幕按钮26",
+              "description": "",
+              "type": "1",
+              "id": "action_1557651397153",
+              "date": 1557726817949,
+              "data": {
+                "time": 0,
+                "velocity": 200,
+                "pitch": 26
+              }
+            },
+            {
+              "name": "暂停",
+              "description": "",
+              "type": "5",
+              "id": "action_1557893450180",
+              "date": 1557893450180,
+              "data": {
+                "time": 0,
+                "velocity": 200,
+                "pitch": 0
+              }
+            }
+          ]
+        },
+        {
+          "date": "00:00:04",
+          "detail": [
+            {
+              "name": "屏幕按钮27",
+              "description": "",
+              "type": "1",
+              "id": "action_1557651429081",
+              "date": 1557726823550,
+              "data": {
+                "time": 0,
+                "velocity": 200,
+                "pitch": 27
+              }
+            }
+          ]
+        },
+        {
+          "date": "00:00:08",
+          "detail": [
+            {
+              "name": "屏幕推杆1",
+              "description": "",
+              "type": "2",
+              "id": "action_1557654361178",
+              "date": 1557654361178,
+              "data": {
+                "time": 0,
+                "pitch": 1,
+                "velocity": 10
+              }
+            }
+          ]
+        },
+        {
+          "date": "00:00:09",
+          "detail": [
+            {
+              "name": "灯光按钮2",
+              "description": "灯光按钮2",
+              "type": "3",
+              "id": "action_1557654839611",
+              "date": 1557654839611,
+              "data": {
+                "time": 0,
+                "velocity": 200,
+                "pitch": 2
+              }
+            }
+          ]
+        }
+      ],
+      "shortcutkey": "G",
+      "shortcutkeycode": 71
+    },
+    {
+      "name": "123",
+      "description": "",
+      "id": "order_1557910804106",
+      "date": 1557910804106,
+      "orderInfo": []
+    }
+  ],
+  "actions": [
+    {
+      "name": "屏幕按钮1",
+      "description": "",
+      "type": "1",
+      "pitch": 3,
+      "id": "action_1557650753453",
+      "date": 1557726796558,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 1
+      }
+    },
+    {
+      "name": "屏幕按钮16",
+      "description": "",
+      "type": "1",
+      "id": "action_1557651376567",
+      "date": 1557726802825,
+      "data": {
+        "time": 0,
+        "pitch": 16,
+        "velocity": 200
+      }
+    },
+    {
+      "name": "屏幕按钮26",
+      "description": "",
+      "type": "1",
+      "id": "action_1557651397153",
+      "date": 1557726817949,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 26
+      }
+    },
+    {
+      "name": "屏幕按钮27",
+      "description": "",
+      "type": "1",
+      "id": "action_1557651429081",
+      "date": 1557726823550,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 27
+      }
+    },
+    {
+      "name": "屏幕推杆1",
+      "description": "",
+      "type": "2",
+      "id": "action_1557654361178",
+      "date": 1557654361178,
+      "data": {
+        "time": 0,
+        "pitch": 1,
+        "velocity": 2
+      }
+    },
+    {
+      "name": "屏幕推杆2",
+      "description": "2",
+      "type": "2",
+      "id": "action_1557654806936",
+      "date": 1557654806936,
+      "data": {
+        "time": 0,
+        "velocity": 1,
+        "pitch": 2
+      }
+    },
+    {
+      "name": "屏幕推杆3",
+      "description": "屏幕推杆",
+      "type": "2",
+      "id": "action_1557654819810",
+      "date": 1557654819810,
+      "data": {
+        "time": 0,
+        "velocity": 22,
+        "pitch": 3
+      }
+    },
+    {
+      "name": "灯光按钮1",
+      "description": "灯光按钮1",
+      "type": "3",
+      "id": "action_1557654831144",
+      "date": 1557654831144,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 1
+      }
+    },
+    {
+      "name": "灯光按钮2",
+      "description": "灯光按钮2",
+      "type": "3",
+      "id": "action_1557654839611",
+      "date": 1557654839611,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 2
+      }
+    },
+    {
+      "name": "灯光按钮3",
+      "description": "灯光按钮",
+      "type": "3",
+      "id": "action_1557654848780",
+      "date": 1557654848780,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 3
+      }
+    },
+    {
+      "name": "灯光推杆1",
+      "description": "灯光推杆1",
+      "type": "4",
+      "id": "action_1557654865631",
+      "date": 1557654865631,
+      "data": {
+        "time": 0,
+        "velocity": 10,
+        "pitch": 1
+      }
+    },
+    {
+      "name": "灯光推杆2",
+      "description": "灯光推杆",
+      "type": "4",
+      "id": "action_1557654876822",
+      "date": 1557654876822,
+      "data": {
+        "time": 0,
+        "velocity": 1,
+        "pitch": 2
+      }
+    },
+    {
+      "name": "灯光推杆3",
+      "description": "ssss",
+      "type": "4",
+      "id": "action_1557654887130",
+      "date": 1557654887130,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 3
+      }
+    },
+    {
+      "name": "音响按钮1",
+      "description": "音响按钮",
+      "type": "5",
+      "id": "action_1557654902287",
+      "date": 1557654902287,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 1
+      }
+    },
+    {
+      "name": "音响按钮2",
+      "description": "音响按钮",
+      "type": "5",
+      "id": "action_1557654909749",
+      "date": 1557891862995,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 2
+      }
+    },
+    {
+      "name": "音响按钮3",
+      "description": "",
+      "type": "5",
+      "id": "action_1557654918474",
+      "date": 1557654918474,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 3
+      }
+    },
+    {
+      "name": "音响推杆1",
+      "description": "",
+      "type": "6",
+      "id": "action_1557654932061",
+      "date": 1557654932061,
+      "data": {
+        "time": 0,
+        "velocity": 22,
+        "pitch": 1
+      }
+    },
+    {
+      "name": "音响推杆2",
+      "description": "2",
+      "type": "6",
+      "id": "action_1557654939264",
+      "date": 1557654945604,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 2
+      }
+    },
+    {
+      "name": "音响推杆3",
+      "description": "",
+      "type": "6",
+      "id": "action_1557654952925",
+      "date": 1557654952925,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 3
+      }
+    },
+    {
+      "name": "屏幕推杆4",
+      "description": "",
+      "type": "2",
+      "id": "action_1557726609627",
+      "date": 1557726609627,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 4
+      }
+    },
+    {
+      "name": "暂停",
+      "description": "",
+      "type": "5",
+      "id": "action_1557893450180",
+      "date": 1557893450180,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 0
+      }
+    },
+    {
+      "name": "继续",
+      "description": "",
+      "type": "5",
+      "id": "action_1557894045277",
+      "date": 1557894045277,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": -1
+      }
+    },
+    {
+      "name": "120",
+      "description": "",
+      "type": "3",
+      "id": "action_1557913011732",
+      "date": 1557913011732,
+      "data": {
+        "time": 0,
+        "velocity": 200,
+        "pitch": 120
+      }
+    }
+  ],
+  "menuAction": [
+    {
+      "name": "屏幕",
+      "list": [
+        {
+          "name": "按钮",
+          "type": "1"
+        },
+        {
+          "name": "推杆",
+          "type": "2"
+        }
+      ]
+    },
+    {
+      "name": "灯光",
+      "list": [
+        {
+          "name": "按钮",
+          "type": "3"
+        },
+        {
+          "name": "推杆",
+          "type": "4"
+        }
+      ]
+    },
+    {
+      "name": "音响",
+      "list": [
+        {
+          "name": "按钮",
+          "type": "5"
+        },
+        {
+          "name": "推杆",
+          "type": "6"
+        }
+      ]
+    }
+  ]
+}

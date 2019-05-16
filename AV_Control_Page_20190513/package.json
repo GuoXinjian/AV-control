@@ -1,0 +1,31 @@
+{
+  "name": "av_control_page",
+  "version": "1.0.0",
+  "description": "#### 项目介绍 {**以下是码云平台说明，您可以替换为您的项目简介** 码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台 无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}",
+  "main": "socketService.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/SugarAdam/AV_Control_Page.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "lowdb": "^1.0.0",
+    "moment": "^2.24.0",
+    "multer": "^1.4.1",
+    "request": "^2.88.0",
+    "socket.io": "^2.1.1",
+    "vue-light-timeline": "^1.0.1"
+  },
+  "devDependencies": {
+    "express": "^4.16.4",
+    "http-proxy-middleware": "^0.19.1"
+  }
+}
