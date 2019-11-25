@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KPL-战队信息设置</title>
+  <link rel="stylesheet" type="text/css" href="static/css/chosen.css">
+  <link rel="stylesheet" type="text/css" href="static/css/index.css">
+</head>
+<body>
+  <div class="line">
+    <span>队伍1：</span><select id="set-t1" class="set-team" disabled onchange="setTeam(1)"></select>
+    <span>选手1：</span><select id="set-p1" class="set-player t1" disabled onchange="setPlayer(1)"></select>
+    <span>选手2：</span><select id="set-p2" class="set-player t1" disabled onchange="setPlayer(2)"></select>
+    <span>选手3：</span><select id="set-p3" class="set-player t1" disabled onchange="setPlayer(3)"></select>
+    <span>选手4：</span><select id="set-p4" class="set-player t1" disabled onchange="setPlayer(4)"></select>
+    <span>选手5：</span><select id="set-p5" class="set-player t1" disabled onchange="setPlayer(5)"></select>
+  </div>
+  <div class="line">
+    <span>队伍2：</span><select id="set-t2" class="set-team" disabled onchange="setTeam(2)"></select>
+    <span>选手6：</span><select id="set-p6" class="set-player t2" disabled onchange="setPlayer(6)"></select>
+    <span>选手7：</span><select id="set-p7" class="set-player t2" disabled onchange="setPlayer(7)"></select>
+    <span>选手8：</span><select id="set-p8" class="set-player t2" disabled onchange="setPlayer(8)"></select>
+    <span>选手9：</span><select id="set-p9" class="set-player t2" disabled onchange="setPlayer(9)"></select>
+    <span>选手10：</span><select id="set-p10" class="set-player t2" disabled onchange="setPlayer(10)"></select>
+  </div>
+  <button id="certain" onclick="sendPlayerId()">确认选手</button>
+</body>
+<script src="static/js/jquery-3.1.1.js"></script>
+<script src="static/js/jquery-migrate-1.2.1.js"></script>
+<script src="static/js/chosen.jquery.min.js"></script>
+<script src="static/js/index.js"></script>
+</html>

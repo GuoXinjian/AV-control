@@ -1,0 +1,35 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+
+body,html{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.line{
+  width: 1300px;
+  height: 66px;
+  line-height: 66px;
+  padding-left: 30px;
+}
+
+.set-team{width: 120px;}
+
+.set-player{width: 150px;}
+
+.chzn-container{
+  position: relative;
+  top: 5px;
+}
+
+#certain{
+  width: 200px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin: 20px 0 0 530px;
+}
